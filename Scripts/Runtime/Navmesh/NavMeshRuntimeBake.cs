@@ -2,28 +2,27 @@
 
 #if MAPMAGIC2 && NAVMESHCOMPONENTS
 using UnityEngine;
-using UnityEngine.Tilemaps;
+using MapMagic.Terrains;
+using MapMagic.Products;
+using Unity.AI.Navigation;
 using UnityEngine.UI;
 
 namespace DoubTech.MapMagic2Extensions.Navmesh
 {
-    public class NavmeshGenerator : MonoBehaviour
+    public class NavMeshRuntimeBake : MonoBehaviour
     {
         public Terrain Terrain;
         public TerrainTile TerrainTile;
         public NavMeshSurface[] surfaces;
-        public InputField input;
-        public InputField output;
+        public InputField Valueinput;
         public MapMagic.Core.MapMagicObject MMObject;
         private int Value;
-        private int Value2;
 
         public void GenerateTerrain()
         {
-            int.TryParse(input.text, out Value);
+            int.TryParse(Valueinput.text, out Value);
             MMObject.graph.defaults["NoiseSeed"] = Value;
-            Wert2 = (int) MMObject.graph.defaults["NoiseSeed"];
-            output.text = Value2.ToString();
+            MMObject.graph.defaults["PositionSeed"] = Value;
             MMObject.ClearAll();
             MMObject.StartGenerate();
             TerrainTile.OnTileApplied += BuildNavMesh;
