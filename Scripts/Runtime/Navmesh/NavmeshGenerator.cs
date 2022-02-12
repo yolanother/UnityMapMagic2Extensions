@@ -1,6 +1,9 @@
 // Built by Songoku from the Messy Community
 
+#if MAPMAGIC2 && NAVMESHCOMPONENTS
 using UnityEngine;
+using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 
 namespace DoubTech.MapMagic2Extensions.Navmesh
 {
@@ -9,18 +12,18 @@ namespace DoubTech.MapMagic2Extensions.Navmesh
         public Terrain Terrain;
         public TerrainTile TerrainTile;
         public NavMeshSurface[] surfaces;
-        public InputField Eingabe;
-        public InputField Ausgabe;
+        public InputField input;
+        public InputField output;
         public MapMagic.Core.MapMagicObject MMObject;
         private int Value;
         private int Value2;
 
         public void GenerateTerrain()
         {
-            int.TryParse(Eingabe.text, out Value);
+            int.TryParse(input.text, out Value);
             MMObject.graph.defaults["NoiseSeed"] = Value;
             Wert2 = (int) MMObject.graph.defaults["NoiseSeed"];
-            Ausgabe.text = Value2.ToString();
+            output.text = Value2.ToString();
             MMObject.ClearAll();
             MMObject.StartGenerate();
             TerrainTile.OnTileApplied += BuildNavMesh;
@@ -33,3 +36,4 @@ namespace DoubTech.MapMagic2Extensions.Navmesh
         }
     }
 }
+#endif
